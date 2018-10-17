@@ -36,11 +36,23 @@ jobs:
         key: demo-dependencies-{{ checksum "pom.xml" }}
 
     # run tests!
-    - run: mvn clean verify
+    - run: |
+        mvn clean verify
+        mkdir -p /deploy
+        cp target/*.jar /deploy
+        cp src/main/appengine/app.yaml /deploy
+    # Persist the specified paths (workspace/echo-output) into the workspace for use in downstream job.
+    - persist_to_workspace:
+        # Must be an absolute path, or relative path from working_directory. This is a directory on the container which is
+        # taken to be the root directory of the workspace.
+        root: deploy
 
   deploy:
     docker:
     - image: google/cloud-sdk
+    - attach_workspace:
+      # Must be absolute path or relative path from working_directory
+      at: /deploy
     steps:
     - run:
         name: Store Service Account
@@ -50,7 +62,8 @@ jobs:
         gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
         gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
     - run: |
-        mvn -DskipTests package appengine:deploy
+        cd /deploy
+        gcloud --quiet app deploy
 
 workflows:
   version: 2
