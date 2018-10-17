@@ -50,10 +50,10 @@ jobs:
   deploy:
     docker:
     - image: google/cloud-sdk
+    steps:
     - attach_workspace:
       # Must be absolute path or relative path from working_directory
       at: /deploy
-    steps:
     - run:
         name: Store Service Account
         command: echo $GCLOUD_SERVICE_KEY > ${HOME}/gcloud-service-key.json
