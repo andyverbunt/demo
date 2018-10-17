@@ -38,14 +38,14 @@ jobs:
     # run tests!
     - run: |
         mvn clean verify
-        mkdir -p /deploy
-        cp target/*.jar /deploy
-        cp src/main/appengine/app.yaml /deploy
+        mkdir -p ~/repo/deploy
+        cp target/*.jar ~/repo/deploy
+        cp src/main/appengine/app.yaml ~/repo/deploy
     # Persist the specified paths (workspace/echo-output) into the workspace for use in downstream job.
     - persist_to_workspace:
         # Must be an absolute path, or relative path from working_directory. This is a directory on the container which is
         # taken to be the root directory of the workspace.
-        root: deploy
+        root: ~/repo/deploy
 
   deploy:
     docker:
