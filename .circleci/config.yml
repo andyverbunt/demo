@@ -52,10 +52,11 @@ jobs:
   deploy:
     docker:
     - image: google/cloud-sdk
+    working_directory: ~/repo
     steps:
     - attach_workspace:
         # Must be absolute path or relative path from working_directory
-        at: /deploy
+        at: ~/repo/deploy
     - run:
         name: Store Service Account
         command: echo $GCLOUD_SERVICE_KEY > ${HOME}/gcloud-service-key.json
@@ -64,7 +65,7 @@ jobs:
         gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
         gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
     - run: |
-        cd /deploy
+        cd ~/repo/deploy
         gcloud --quiet app deploy
 
 workflows:
