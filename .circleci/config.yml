@@ -65,6 +65,10 @@ jobs:
         gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
         gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
     - run: |
+        echo "ls ~/repo/deploy"
+        ls ~/repo/deploy
+        echo "ls ~/repo"
+        ls ~/repo
         cd ~/repo/deploy
         gcloud --quiet app deploy
 
