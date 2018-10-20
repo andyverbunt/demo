@@ -45,9 +45,9 @@ jobs:
     - persist_to_workspace:
         # Must be an absolute path, or relative path from working_directory. This is a directory on the container which is
         # taken to be the root directory of the workspace.
-        root: ~/repo
+        root: ~/repo/deploy
         paths:
-        - deploy/*
+        - *
 
   deploy:
     docker:
@@ -68,7 +68,7 @@ jobs:
         echo "ls"
         ls -la ~/repo/deploy
         ls -la ~/repo/deploy/deploy
-        cd ~/repo/deploy/deploy
+        cd ~/repo/deploy
         gcloud --quiet app deploy
 
 workflows:
