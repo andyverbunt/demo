@@ -1,12 +1,5 @@
 runtime: java
 env: flex
-service: demo
-manual_scaling:
-  instances: 2
-resources:
-  cpu: 2
-  memory_gb: 1
-  disk_size_gb: 1
 endpoints_api_service:
   name: project-gae-2.appspot.com/demo
   rollout_strategy: managed
