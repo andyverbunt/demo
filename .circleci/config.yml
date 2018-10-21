@@ -71,7 +71,7 @@ jobs:
         command: |
           cd ~/repo/deploy/
           source env_file
-          gcloud --quiet --no-promote app deploy -v $REVISION
+          gcloud app deploy -v $REVISION --no-promote
 
 workflows:
   version: 2
