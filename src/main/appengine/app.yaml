@@ -2,7 +2,7 @@ runtime: java
 env: flex
 service: demo
 resources:
-  cpu: 1
+  cpu: 2
   memory_gb: 1
   disk_size_gb: 1
 endpoints_api_service:
