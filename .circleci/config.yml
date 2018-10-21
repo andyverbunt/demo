@@ -37,7 +37,8 @@ jobs:
 
     # run tests!
     - run: |
-        mvn clean verify
+        REVISION=$(date "+%Y-%m-%d_%H-%M-%S")
+        mvn clean verify -Drevision=$REVISION
         mkdir -p ~/repo/deploy
         cp target/*.jar ~/repo/deploy
         cp src/main/appengine/app.yaml ~/repo/deploy
