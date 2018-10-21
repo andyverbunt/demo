@@ -37,10 +37,10 @@ jobs:
 
     # run tests!
     - run: |
+        mkdir -p ~/repo/deploy
         REVISION=$(date "+%Y-%m-%d_%H-%M-%S")
         echo "export REVISION=$REVISION" > ~/repo/deploy/env_file
         mvn clean verify -Drevision=$REVISION
-        mkdir -p ~/repo/deploy
         cp target/*.jar ~/repo/deploy
         cp src/main/appengine/app.yaml ~/repo/deploy
     # Persist the specified paths (workspace/echo-output) into the workspace for use in downstream job.
