@@ -1,6 +1,8 @@
 runtime: java
 env: flex
 service: demo
+manual_scaling:
+  instances: 2
 resources:
   cpu: 2
   memory_gb: 1
