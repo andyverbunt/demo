@@ -1,6 +1,6 @@
 runtime: java
 env: flex
-name: demo
+service_name: demo
 endpoints_api_service:
   name: project-gae-2.appspot.com/demo
   rollout_strategy: managed
