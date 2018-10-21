@@ -1,17 +1,18 @@
 runtime: java
 env: flex
+name: demo
 endpoints_api_service:
   name: project-gae-2.appspot.com/demo
   rollout_strategy: managed
 liveness_check:
-  path: "/actuator/health"
+  path: /actuator/health
   check_interval_sec: 30
   timeout_sec: 4
   failure_threshold: 2
   success_threshold: 2
 
 readiness_check:
-  path: "/actuator/health"
+  path: /actuator/health
   check_interval_sec: 5
   timeout_sec: 4
   failure_threshold: 2
