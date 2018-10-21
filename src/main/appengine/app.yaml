@@ -1,5 +1,8 @@
 runtime: java
 env: flex
+endpoints_api_service:
+  name: project-gae-2.appspot.com/demo
+  rollout_strategy: managed
 liveness_check:
   path: "/actuator/health"
   check_interval_sec: 30
