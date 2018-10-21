@@ -1,7 +1,7 @@
 runtime: java
 env: flex
 endpoints_api_service:
-  name: project-gae-2.appspot.com/demo
+  name: project-gae-2.appspot.com
   rollout_strategy: managed
 liveness_check:
   path: /actuator/health
