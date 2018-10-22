@@ -5,18 +5,15 @@ endpoints_api_service:
   rollout_strategy: managed
 manual_scaling:
   instances: 2
-handlers:
-- url: /.*
-  script: this field is required, but ignored
 liveness_check:
-  path: /actuator/health
+  path: "/actuator/health"
   check_interval_sec: 30
   timeout_sec: 4
   failure_threshold: 2
   success_threshold: 2
   initial_delay_sec: 1200
 readiness_check:
-  path: /actuator/health
+  path: "/actuator/health"
   check_interval_sec: 5
   timeout_sec: 4
   failure_threshold: 2
