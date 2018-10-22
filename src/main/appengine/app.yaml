@@ -1,8 +1,7 @@
 runtime: java
 env: flex
-endpoints_api_service:
-  name: project-gae-2.appspot.com
-  rollout_strategy: managed
+runtime_config:  # Optional
+  jdk: openjdk8
 manual_scaling:
   instances: 2
 liveness_check:
