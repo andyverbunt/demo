@@ -1,12 +1,8 @@
-# Java Maven CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-java/ for more details
-#
 version: 2
 jobs:
   build:
     docker:
-    # specify the version you desire here
+    # Check https://circleci.com/docs/2.0/language-java/ for more details
     - image: circleci/openjdk:8-jdk
 
     # Specify service dependencies here if necessary
@@ -37,13 +33,15 @@ jobs:
 
     # run tests!
     - run: |
-        mkdir -p ~/repo/deploy
         REVISION=$(date "+%Y%m%d-%H%M%S")-$(git rev-parse --short HEAD)
-        echo "export REVISION=$REVISION" > ~/repo/deploy/env_file
         mvn clean verify -Drevision=$REVISION
-        cp target/*.jar ~/repo/deploy
-        cp src/main/appengine/app.yaml ~/repo/deploy
-    # Persist the specified paths (workspace/echo-output) into the workspace for use in downstream job.
+
+        mkdir -p ~/repo/deploy/.elasticbeanstalk
+        mkdir -p ~/repo/deploy/target
+        cp target/*.jar ~/repo/deploy/target/application.jar
+        cp .elasticbeanstalk/config.yml ~/repo/deploy/.elasticbeanstalk/config.yml
+
+    # Persist the specified paths into the workspace for use in downstream job.
     - persist_to_workspace:
         # Must be an absolute path, or relative path from working_directory. This is a directory on the container which is
         # taken to be the root directory of the workspace.
@@ -52,26 +50,24 @@ jobs:
         - deploy/*
 
   deploy:
-    docker:
-    - image: google/cloud-sdk
     working_directory: ~/repo
+    docker:
+    - image: circleci/ruby:2.4.3
     steps:
     - attach_workspace:
         # Must be absolute path or relative path from working_directory
         at: .
     - run:
-        name: Store Service Account
-        command: echo $GCLOUD_SERVICE_KEY > ${HOME}/gcloud-service-key.json
-    - run: |
-        gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
-        gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
-        gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}
-    - run:
-        no_output_timeout: 20m
+        name: Installing deployment dependencies
+        working_directory: /
         command: |
-          cd ~/repo/deploy/
-          source env_file
-          gcloud app deploy -v $REVISION --promote
+          sudo apt-get -y -qq update
+          sudo apt-get install python-pip python-dev build-essential
+          sudo pip install awsebcli --upgrade
+
+    - run:
+        name: Deploying
+        command: eb deploy
 
 workflows:
   version: 2
