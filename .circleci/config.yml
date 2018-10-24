@@ -67,7 +67,9 @@ jobs:
 
     - run:
         name: Deploying
-        command: eb deploy
+        command: |
+          cd deploy
+          eb deploy
 
 workflows:
   version: 2
