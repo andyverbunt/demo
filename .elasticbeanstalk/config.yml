@@ -1,7 +1,3 @@
-branch-defaults:
-  master:
-    environment: experiment-dev
-    group_suffix: null
 deploy:
   artifact: target/application.jar
 global:

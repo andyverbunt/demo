@@ -69,7 +69,7 @@ jobs:
         name: Deploying
         command: |
           cd deploy
-          eb deploy
+          eb deploy experiment-dev
 
 workflows:
   version: 2
