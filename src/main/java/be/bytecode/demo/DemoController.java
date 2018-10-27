@@ -15,6 +15,6 @@ public class DemoController {
 
     @RequestMapping("/demo")
     public String demo() {
-        return version + "@" + new Date().toString();
+        return "Another version: " + version + "@" + new Date().toString();
     }
 }
